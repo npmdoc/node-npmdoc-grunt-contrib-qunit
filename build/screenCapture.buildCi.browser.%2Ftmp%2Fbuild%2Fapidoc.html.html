@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/gruntjs/grunt-contrib-qunit#readme"
-
-    >grunt-contrib-qunit (v2.0.0)</a>
+    <a href="https://github.com/gruntjs/grunt-contrib-qunit#readme">grunt-contrib-qunit (v2.0.0)</a>
 </h1>
 <h4>Run QUnit unit tests in a headless PhantomJS instance</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-qunit">module grunt-contrib-qunit</a><ol>
 
@@ -110,11 +103,11 @@
     <li>description and source-code<pre class="apidocCodePre">grunt-contrib-qunit = function (grunt) {
 
   // Nodejs libs.
-  var path = require(&#x27;path&#x27;);
-  var url = require(&#x27;url&#x27;);
+  var path = require('path');
+  var url = require('url');
 
   // External lib.
-  var phantomjs = require(&#x27;grunt-lib-phantomjs&#x27;).init(grunt);
+  var phantomjs = require('grunt-lib-phantomjs').init(grunt);
 
   // Keep track of the last-started module and test. Additionally, keep track
   // of status for individual test files and the entire test suite.
@@ -124,16 +117,16 @@
   var unfinished = {};
 
   // Get an asset file, local to the root of the project.
-  var asset = path.join.bind(null, __dirname, &#x27;..&#x27;);
+  var asset = path.join.bind(null, __dirname, '..');
 
   // Allow an error message to retain its color when split across multiple lines.
   var formatMessage = function(str) {
-    return String(str).split(&#x27;\n&#x27;).map(function(s) { return s.magenta; }).join(&#x27;\n&#x27;);
+    return String(str).split('\n').map(function(s) { return s.magenta; }).join('\n');
   };
 
   // If options.force then log an error, otherwise exit with a warning
   var warnUnlessForced = function (message) {
-    if (options &#x26;&#x26; options.force) {
+    if (options &amp;&amp; options.force) {
       grunt.log.error(message);
     } else {
       grunt.warn(message);
@@ -145,20 +138,20 @@
   var logFailedAssertions = function() {
     var assertion;
 
-    if (options &#x26;&#x26; options.summaryOnly) {
+    if (options &amp;&amp; options.summaryOnly) {
       return;
     }
 
     // Print each assertion error.
     while (assertion = failedAssertions.shift()) {
       grunt.verbose.or.error(assertion.testName);
-      grunt.log.error(&#x27;Message: &#x27; + formatMessage(assertion.message));
+      grunt.log.error('Message: ' + formatMessage(assertion.message));
       if (assertion.actual !== assertion.expected) {
-        grunt.log.error(&#x27;Actual: &#x27; + formatMessage(assertion.actual));
-        grunt.log.error(&#x27;Expected: &#x27; + formatMessage(assertion.expected));
+        grunt.log.error('Actual: ' + formatMessage(assertion.actual));
+        grunt.log.error('Expected: ' + formatMessage(assertion.expected));
       }
       if (assertion.source) {
-        grunt.log.error(assertion.source.replace(/ {4}(at)/g, &#x27;  $1&#x27;));
+        grunt.log.error(assertion.source.replace(/ {4}(at)/g, '  $1'));
       }
       grunt.log.writeln();
     }
@@ -194,21 +187,21 @@
 
     return [
       totalTests,
-      &#x22; tests completed with &#x22;,
+      " tests completed with ",
       status.failed,
-      &#x22; failed, &#x22; +
+      " failed, " +
       status.skipped,
-      &#x22; skipped, and &#x22;,
+      " skipped, and ",
       status.todo,
-      &#x22; todo. \n&#x22; +
+      " todo. \n" +
       totalAssertions,
-      &#x22; assertions (in &#x22;,
+      " assertions (in ",
       status.runtime,
-      &#x22;ms), passed: &#x22; +
+      "ms), passed: " +
       status.assertions.passed,
-      &#x22;, failed: &#x22;,
+      ", failed: ",
       status.assertions.failed
-    ].join( &#x22;&#x22; );
+    ].join( "" );
   };
 
   // Copied from QUnit source code
@@ -216,41 +209,41 @@
     var hex;
     var i = 0;
     var hash = 0;
-    var str = module + &#x27;\x1C&#x27; + undefined;
+    var str = module + '\x1C' + undefined;
     var len = str.length;
 
-    for (; i &#x3c; len; i++) {
-      hash  = ((hash &#x3c;&#x3c; 5) - hash) + str.charCodeAt(i);
+    for (; i &lt; len; i++) {
+      hash  = ((hash &lt;&lt; 5) - hash) + str.charCodeAt(i);
       hash |= 0;
     }
 
     // Convert the possibly negative integer hash code into an 8 character
-    // hex string, which isn&#x27;t strictly necessary but increases user understanding
+    // hex string, which isn't strictly necessary but increases user understanding
     // that the id is a SHA-like hash
     hex = (0x100000000 + hash).toString(16);
-    if (hex.length &#x3c; 8) {
-      hex = &#x27;0000000&#x27; + hex;
+    if (hex.length &lt; 8) {
+      hex = '0000000' + hex;
     }
 
     return hex.slice(-8);
   };
 
   // QUnit hooks.
-  phantomjs.on(&#x27;qunit.begin&#x27;, function() {
+  phantomjs.on('qunit.begin', function() {
     currentStatus = createStatus();
   });
 
-  phantomjs.on(&#x27;qunit.moduleStart&#x27;, function(name) {
+  phantomjs.on('qunit.moduleStart', function(name) {
     unfinished[name] = true;
     currentModule = name;
   });
 
-  phantomjs.on(&#x27;qunit.moduleDone&#x27;, function(name/*, failed, passed, total*/) {
+  phantomjs.on('qunit.moduleDone', function(name/*, failed, passed, total*/) {
     delete unfinished[name];
   });
 
-  phantomjs.on(&#x27;qunit.log&#x27;, function(result, actual, expected, message, source, todo) {
-    if (!result &#x26;&#x26; !todo) {
+  phantomjs.on('qunit.log', function(result, actual, expected, message, source, todo) {
+    if (!result &amp;&amp; !todo) {
       failedAssertions.push({
         actual: ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -298,3 +291,4 @@
     ]
 </div>
 </div>
+</body></html>

@@ -51,7 +51,7 @@
 
         href="https://github.com/gruntjs/grunt-contrib-qunit#readme"
 
-    >grunt-contrib-qunit (v1.3.0)</a>
+    >grunt-contrib-qunit (v2.0.0)</a>
 </h1>
 <h4>Run QUnit unit tests in a headless PhantomJS instance</h4>
 <div class="apidocSectionDiv"><a
@@ -61,12 +61,234 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-qunit">module grunt-contrib-qunit</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-qunit.grunt-contrib-qunit">
+            function <span class="apidocSignatureSpan"></span>grunt-contrib-qunit
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-qunit.toString">
+            function <span class="apidocSignatureSpan">grunt-contrib-qunit.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-qunit.toString">module grunt-contrib-qunit.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-qunit.toString.toString">
+            function <span class="apidocSignatureSpan">grunt-contrib-qunit.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.grunt-contrib-qunit" id="apidoc.module.grunt-contrib-qunit">module grunt-contrib-qunit</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-qunit.grunt-contrib-qunit" id="apidoc.element.grunt-contrib-qunit.grunt-contrib-qunit">
+        function <span class="apidocSignatureSpan"></span>grunt-contrib-qunit
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">grunt-contrib-qunit = function (grunt) {
+
+  // Nodejs libs.
+  var path = require(&#x27;path&#x27;);
+  var url = require(&#x27;url&#x27;);
+
+  // External lib.
+  var phantomjs = require(&#x27;grunt-lib-phantomjs&#x27;).init(grunt);
+
+  // Keep track of the last-started module and test. Additionally, keep track
+  // of status for individual test files and the entire test suite.
+  var options, currentModule, currentTest, currentStatus, status;
+
+  // Keep track of the last-started test(s).
+  var unfinished = {};
+
+  // Get an asset file, local to the root of the project.
+  var asset = path.join.bind(null, __dirname, &#x27;..&#x27;);
+
+  // Allow an error message to retain its color when split across multiple lines.
+  var formatMessage = function(str) {
+    return String(str).split(&#x27;\n&#x27;).map(function(s) { return s.magenta; }).join(&#x27;\n&#x27;);
+  };
+
+  // If options.force then log an error, otherwise exit with a warning
+  var warnUnlessForced = function (message) {
+    if (options &#x26;&#x26; options.force) {
+      grunt.log.error(message);
+    } else {
+      grunt.warn(message);
+    }
+  };
+
+  // Keep track of failed assertions for pretty-printing.
+  var failedAssertions = [];
+  var logFailedAssertions = function() {
+    var assertion;
+
+    if (options &#x26;&#x26; options.summaryOnly) {
+      return;
+    }
+
+    // Print each assertion error.
+    while (assertion = failedAssertions.shift()) {
+      grunt.verbose.or.error(assertion.testName);
+      grunt.log.error(&#x27;Message: &#x27; + formatMessage(assertion.message));
+      if (assertion.actual !== assertion.expected) {
+        grunt.log.error(&#x27;Actual: &#x27; + formatMessage(assertion.actual));
+        grunt.log.error(&#x27;Expected: &#x27; + formatMessage(assertion.expected));
+      }
+      if (assertion.source) {
+        grunt.log.error(assertion.source.replace(/ {4}(at)/g, &#x27;  $1&#x27;));
+      }
+      grunt.log.writeln();
+    }
+  };
+
+  var createStatus = function() {
+    return {
+      passed: 0,
+      failed: 0,
+      skipped: 0,
+      todo: 0,
+      runtime: 0,
+      assertions: {
+        passed: 0,
+        failed: 0
+      }
+    };
+  };
+
+  var mergeStatus = function(statusA, statusB) {
+    statusA.passed += statusB.passed;
+    statusA.failed += statusB.failed;
+    statusA.skipped += statusB.skipped;
+    statusA.todo += statusB.todo;
+    statusA.runtime += statusB.runtime;
+    statusA.assertions.passed += statusB.assertions.passed;
+    statusA.assertions.failed += statusB.assertions.failed;
+  };
+
+  var generateMessage = function(status) {
+    var totalTests = status.passed + status.failed + status.skipped + status.todo;
+    var totalAssertions = status.assertions.passed + status.assertions.failed;
+
+    return [
+      totalTests,
+      &#x22; tests completed with &#x22;,
+      status.failed,
+      &#x22; failed, &#x22; +
+      status.skipped,
+      &#x22; skipped, and &#x22;,
+      status.todo,
+      &#x22; todo. \n&#x22; +
+      totalAssertions,
+      &#x22; assertions (in &#x22;,
+      status.runtime,
+      &#x22;ms), passed: &#x22; +
+      status.assertions.passed,
+      &#x22;, failed: &#x22;,
+      status.assertions.failed
+    ].join( &#x22;&#x22; );
+  };
+
+  // Copied from QUnit source code
+  var generateHash = function(module) {
+    var hex;
+    var i = 0;
+    var hash = 0;
+    var str = module + &#x27;\x1C&#x27; + undefined;
+    var len = str.length;
+
+    for (; i &#x3c; len; i++) {
+      hash  = ((hash &#x3c;&#x3c; 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+
+    // Convert the possibly negative integer hash code into an 8 character
+    // hex string, which isn&#x27;t strictly necessary but increases user understanding
+    // that the id is a SHA-like hash
+    hex = (0x100000000 + hash).toString(16);
+    if (hex.length &#x3c; 8) {
+      hex = &#x27;0000000&#x27; + hex;
+    }
+
+    return hex.slice(-8);
+  };
+
+  // QUnit hooks.
+  phantomjs.on(&#x27;qunit.begin&#x27;, function() {
+    currentStatus = createStatus();
+  });
+
+  phantomjs.on(&#x27;qunit.moduleStart&#x27;, function(name) {
+    unfinished[name] = true;
+    currentModule = name;
+  });
+
+  phantomjs.on(&#x27;qunit.moduleDone&#x27;, function(name/*, failed, passed, total*/) {
+    delete unfinished[name];
+  });
+
+  phantomjs.on(&#x27;qunit.log&#x27;, function(result, actual, expected, message, source, todo) {
+    if (!result &#x26;&#x26; !todo) {
+      failedAssertions.push({
+        actual: ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-qunit.toString" id="apidoc.element.grunt-contrib-qunit.toString">
+        function <span class="apidocSignatureSpan">grunt-contrib-qunit.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-contrib-qunit.toString" id="apidoc.module.grunt-contrib-qunit.toString">module grunt-contrib-qunit.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-qunit.toString.toString" id="apidoc.element.grunt-contrib-qunit.toString.toString">
+        function <span class="apidocSignatureSpan">grunt-contrib-qunit.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 
