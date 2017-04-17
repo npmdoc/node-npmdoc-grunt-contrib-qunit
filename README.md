@@ -1,9 +1,11 @@
-# api documentation for  [grunt-contrib-qunit (v1.3.0)](https://github.com/gruntjs/grunt-contrib-qunit#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-qunit.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-qunit) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-qunit.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-qunit)
+# api documentation for  [grunt-contrib-qunit (v2.0.0)](https://github.com/gruntjs/grunt-contrib-qunit#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-qunit.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-qunit) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-qunit.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-qunit)
 #### Run QUnit unit tests in a headless PhantomJS instance
 
-[![NPM](https://nodei.co/npm/grunt-contrib-qunit.png?downloads=true)](https://www.npmjs.com/package/grunt-contrib-qunit)
+[![NPM](https://nodei.co/npm/grunt-contrib-qunit.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/grunt-contrib-qunit)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-qunit/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-grunt-contrib-qunit_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-qunit/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-grunt-contrib-qunit/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-grunt-contrib-qunit/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-qunit/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-qunit/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-grunt-contrib-qunit/build/screenCapture.npmPackageListing.svg)
 
@@ -100,12 +102,12 @@
         "grunt-contrib-internal": "^1.1.0",
         "grunt-contrib-jshint": "^1.0.0",
         "grunt-shell": "^1.3.0",
-        "qunitjs": "^1.20.0"
+        "qunitjs": "^2.3.0"
     },
     "directories": {},
     "dist": {
-        "shasum": "9dac628cfd4ec815998633db73b52bdb3ddbc99e",
-        "tarball": "https://registry.npmjs.org/grunt-contrib-qunit/-/grunt-contrib-qunit-1.3.0.tgz"
+        "shasum": "54a51b4b2c84fee62c3b7e00145c928d1ec2b7ec",
+        "tarball": "https://registry.npmjs.org/grunt-contrib-qunit/-/grunt-contrib-qunit-2.0.0.tgz"
     },
     "engines": {
         "node": ">=0.10.0"
@@ -114,7 +116,7 @@
         "tasks",
         "phantomjs"
     ],
-    "gitHead": "5085bf906a0d936102fb679f3b05f1003e436958",
+    "gitHead": "b9522f40a518fcba2d06032512c882738d496256",
     "homepage": "https://github.com/gruntjs/grunt-contrib-qunit#readme",
     "keywords": [
         "gruntplugin"
@@ -123,49 +125,38 @@
     "main": "tasks/qunit.js",
     "maintainers": [
         {
-            "name": "arkni",
-            "email": "brahim.arkni@gmail.com"
+            "name": "arkni"
         },
         {
-            "name": "cowboy",
-            "email": "cowboy@rj3.net"
+            "name": "cowboy"
         },
         {
-            "name": "jmeas",
-            "email": "jellyes2@gmail.com"
+            "name": "jmeas"
         },
         {
-            "name": "jsoverson",
-            "email": "jsoverson@gmail.com"
+            "name": "jsoverson"
         },
         {
-            "name": "jzaefferer",
-            "email": "joern.zaefferer@gmail.com"
+            "name": "jzaefferer"
         },
         {
-            "name": "leobalter",
-            "email": "leonardo.balter@gmail.com"
+            "name": "leobalter"
         },
         {
-            "name": "shama",
-            "email": "kyle@dontkry.com"
+            "name": "shama"
         },
         {
-            "name": "sindresorhus",
-            "email": "sindresorhus@gmail.com"
+            "name": "sindresorhus"
         },
         {
-            "name": "tkellen",
-            "email": "tyler@sleekcode.net"
+            "name": "tkellen"
         },
         {
-            "name": "vladikoff",
-            "email": "vlad@vladikoff.com"
+            "name": "vladikoff"
         }
     ],
     "name": "grunt-contrib-qunit",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/gruntjs/grunt-contrib-qunit.git"
@@ -173,19 +164,9 @@
     "scripts": {
         "test": "grunt test --stack"
     },
-    "version": "1.3.0"
+    "version": "2.0.0"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module grunt-contrib-qunit](#apidoc.module.grunt-contrib-qunit)
-
-
-
-# <a name="apidoc.module.grunt-contrib-qunit"></a>[module grunt-contrib-qunit](#apidoc.module.grunt-contrib-qunit)
 
 
 
