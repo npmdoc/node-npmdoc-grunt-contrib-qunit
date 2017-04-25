@@ -1,4 +1,7 @@
-# api documentation for  [grunt-contrib-qunit (v2.0.0)](https://github.com/gruntjs/grunt-contrib-qunit#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-qunit.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-qunit) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-qunit.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-qunit)
+# npmdoc-grunt-contrib-qunit
+
+#### basic api documentation for  [grunt-contrib-qunit (v2.0.0)](https://github.com/gruntjs/grunt-contrib-qunit#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-qunit.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-qunit) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-qunit.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-qunit)
+
 #### Run QUnit unit tests in a headless PhantomJS instance
 
 [![NPM](https://nodei.co/npm/grunt-contrib-qunit.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/grunt-contrib-qunit)
@@ -164,7 +167,8 @@
     "scripts": {
         "test": "grunt test --stack"
     },
-    "version": "2.0.0"
+    "version": "2.0.0",
+    "bin": {}
 }
 ```
 
